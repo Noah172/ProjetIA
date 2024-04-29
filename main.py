@@ -1,4 +1,4 @@
-def test_etat_but(etat):
+"""def test_etat_but(etat):
     return etat==sorted(etat)
 
 def fils_etat(etat):
@@ -13,35 +13,43 @@ def pop(liste):
     return liste.pop()
 
 def ajouterTete(e, liste):
-    return liste.append(e)
+    return liste.append(e)*)
+"""
+
+"""from arbre import Arbre
+from etat import Etat
+from fonction_global import distance_manhattan
+"""
+
+def Profondeur_dabord(etat_initial, but):
+    enAttente=[etat_initial]
+    vus=[]
+    trouve=False
+    while enAttente:
+        actuel=enAttente.pop()
+        vus.append(actuel)
+        if actuel==but:
+            trouve=True
+            return (True,actuel)
+        else:
+            for etat_fils in actuel.filsEtat():
+                if etat_fils not in vus:
+                    enAttente.insert(0,etat_fils)
+    if not trouve:
+        return (False,etat_initial)
+
+etat_debut=Etat(
+    [[0,2,0,1],
+     [2,1,0,2],
+     [1,3,0,3]]
+)
 
 
-def profondeur_d_abord(depart, test_etat_but, fils_etat):
-    en_attente = [depart]  
-    vus = set()  
-    
-    while en_attente: 
-        prochain = en_attente.pop()
-        prochain_tuple = tuple(prochain) 
-
-        if prochain_tuple in vus:
-            continue
-        vus.add(prochain_tuple)  
-
-        if test_etat_but(prochain):
-            return True, prochain  
-
-        for e in fils_etat(prochain):
-            if tuple(e) not in vus:
-                en_attente.append(e)  
-
-    return False, depart  
-
-
-
+""""
 etat_initial = [3, 1, 2]
 trouve, etat_final = profondeur_d_abord(etat_initial, test_etat_but, fils_etat)
 print("État initial:", etat_initial)
 print("État but:", etat_final)
 print("fils etat",fils_etat(etat_initial))
 print("inserer 6: ", ajouterTete(6,etat_initial))
+"""
