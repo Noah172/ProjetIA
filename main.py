@@ -2,7 +2,18 @@ def test_etat_but(etat):
     return etat==sorted(etat)
 
 def fils_etat(etat):
-    return [etat[:i] + [etat[i+1], etat[i]] + etat[i+2:] for i in range(len(etat) - 1)]
+    fils=[]
+    for i in range(len(etat) - 1):
+        etat_fils = etat[:] 
+        etat_fils[i],etat_fils[i+1] = etat_fils[i+1], etat_fils[i] 
+        fils.append(etat_fils)
+    return fils
+
+def pop(liste):
+    return liste.pop()
+
+def ajouterTete(e, liste):
+    return liste.append(e)
 
 
 def profondeur_d_abord(depart, test_etat_but, fils_etat):
@@ -30,6 +41,7 @@ def profondeur_d_abord(depart, test_etat_but, fils_etat):
 
 etat_initial = [3, 1, 2]
 trouve, etat_final = profondeur_d_abord(etat_initial, test_etat_but, fils_etat)
+print("État initial:", etat_initial)
 print("État but:", etat_final)
 print("fils etat",fils_etat(etat_initial))
-
+print("inserer 6: ", ajouterTete(6,etat_initial))
