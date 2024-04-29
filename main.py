@@ -16,10 +16,9 @@ def ajouterTete(e, liste):
     return liste.append(e)*)
 """
 
-"""from arbre import Arbre
+from liste import Liste
 from etat import Etat
-from fonction_global import distance_manhattan
-"""
+
 
 def Profondeur_dabord(etat_initial, but):
     enAttente=[etat_initial]
@@ -34,7 +33,7 @@ def Profondeur_dabord(etat_initial, but):
         else:
             for etat_fils in actuel.filsEtat():
                 if etat_fils not in vus:
-                    enAttente.insert(0,etat_fils)
+                    enAttente.ajouterTete(0,etat_fils)
     if not trouve:
         return (False,etat_initial)
 
@@ -44,6 +43,11 @@ etat_debut=Etat(
      [1,3,0,3]]
 )
 
+etat_but=Etat(
+    [[1,2,0,0],
+     [2,1,0,2],
+     [1,3,0,3]]
+)
 
 """"
 etat_initial = [3, 1, 2]
