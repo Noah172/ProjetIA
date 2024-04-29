@@ -1,23 +1,6 @@
-"""def test_etat_but(etat):
-    return etat==sorted(etat)
-
-def fils_etat(etat):
-    fils=[]
-    for i in range(len(etat) - 1):
-        etat_fils = etat[:] 
-        etat_fils[i],etat_fils[i+1] = etat_fils[i+1], etat_fils[i] 
-        fils.append(etat_fils)
-    return fils
-
-def pop(liste):
-    return liste.pop()
-
-def ajouterTete(e, liste):
-    return liste.append(e)*)
-"""
-
-from liste import Liste
-from etat import Etat
+from Liste import *
+from Etat import Etat
+import time
 
 
 def Profondeur_dabord(etat_initial, but):
@@ -25,7 +8,9 @@ def Profondeur_dabord(etat_initial, but):
     vus=[]
     trouve=False
     while enAttente:
-        actuel=enAttente.pop()
+        print(enAttente)
+        print(taille(enAttente))
+        actuel=enAttente.pop(0)
         vus.append(actuel)
         if actuel==but:
             trouve=True
@@ -33,27 +18,71 @@ def Profondeur_dabord(etat_initial, but):
         else:
             for etat_fils in actuel.filsEtat():
                 if etat_fils not in vus:
-                    enAttente.ajouterTete(0,etat_fils)
+                    ajouterTete(etat_fils, enAttente)
     if not trouve:
         return (False,etat_initial)
 
-etat_debut=Etat(
-    [[0,2,0,1],
-     [2,1,0,2],
-     [1,3,0,3]]
+print("Début du test de la recherche en profondeur d'abord bornée...")
+
+etat_debut = Etat(
+    [[0, 2, 0, 1],
+     [5, 9, 0, 7],
+     [1, 3, 0, 3]]
 )
 
-etat_but=Etat(
-    [[1,2,0,0],
-     [2,1,0,2],
-     [1,3,0,3]]
+etat_but = Etat(
+    [[1, 2, 0, 0],
+     [2, 1, 0, 2],
+     [1, 3, 0, 3]]
 )
 
-""""
-etat_initial = [3, 1, 2]
-trouve, etat_final = profondeur_d_abord(etat_initial, test_etat_but, fils_etat)
-print("État initial:", etat_initial)
-print("État but:", etat_final)
-print("fils etat",fils_etat(etat_initial))
-print("inserer 6: ", ajouterTete(6,etat_initial))
+etat_debut.afficher()
+
+print(afficher_liste_etat(etat_debut.filsEtat()))
+"""
+trouve, etat_final = Profondeur_dabord(etat_debut, etat_but)
+
+if trouve:
+    print("Trouvé ")
+else:
+    print("Aucun état but n'a été trouvé.")
+
+print("État initial:")
+etat_debut.afficher()
+
+print("État atteint:")
+etat_final.afficher()
+
+print("État but:")
+etat_but.afficher()
+
+"""
+
+"""
+. 2 . 1
+2 1 . 2
+1 3 . 3
+
+Fils d'un Etats
+
+. 2 . .
+2 1 . 2
+1 3 1 3
+
+. . . 1
+2 1 . 2
+1 3 2 3
+
+. 2 . 1
+. 1 . 2
+1 3 2 3
+
+2 . . 1
+2 1 . 2
+1 3 . 3
+
+1 2 . .
+2 1 . 2
+1 3 . 3
+
 """
