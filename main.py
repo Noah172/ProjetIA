@@ -1,5 +1,5 @@
 from Liste import *
-from Etat import Etat
+from Etat import *
 import time
 
 
@@ -24,21 +24,21 @@ def Profondeur_dabord(etat_initial, but):
 
 print("Début du test de la recherche en profondeur d'abord bornée...")
 
-etat_debut = Etat(
-    [[0, 2, 0, 1],
+etat_debut =[[0, 0, 0, 6],
      [5, 9, 0, 7],
      [1, 3, 0, 3]]
-)
 
-etat_but = Etat(
-    [[1, 2, 0, 0],
+
+etat_but = [[6, 2, 0, 0],
      [2, 1, 0, 2],
      [1, 3, 0, 3]]
-)
 
-etat_debut.afficher()
+afficher(etat_debut)
 
-print(afficher_liste_etat(etat_debut.filsEtat()))
+
+liste_fils = fils_etat(etat_debut)
+afficher_liste_etat(liste_fils)
+
 """
 trouve, etat_final = Profondeur_dabord(etat_debut, etat_but)
 
