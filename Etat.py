@@ -83,3 +83,5 @@ def afficher(etat):
     for ligne in etat:
         print('|' + '|'.join(str(cube) if cube != 0 else ' ' for cube in ligne) + '|')
     print(bold_end)
+
+
