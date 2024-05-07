@@ -1,6 +1,6 @@
 from Liste import *
 from Etat import *
-import time
+from matrice_tests import *
 
 def Profondeur_dabord(etat_initial, but):
     enAttente=[etat_initial]
@@ -44,95 +44,71 @@ def Profondeur_dabord_bornee(etat_initial, but,limite):
 
 testEtatBut=None
 filsEtat=None
-fEtat=None
 solution=None
 
-
-
-def nombreMalMis(etat, but):
-    mal_mis=0
-    for i in range(3):
-        for j in range(4):
-            if etat[i][j]!=but[i][j]:
-                mal_mis=mal_mis+1
-    return mal_mis
-
-
-def fEtat(etat,but, g):
-    return g + h(etat,but)
-
-
-def h(etat, but):
-    return nombreMalMis(etat,but)
-
-def IDA_star():
-    g=0
-    solution = None
-    seuil = h(etat_debut,etat_but)
-    terminé=False
-    while not terminé:
-        terminé,seuil,solution = ProfondeurBornee(seuil,g)
-    if solution.size > 0:
-        return solution
-    else:
-        return("Echec")
-
-def ProfondeurBornee(s,g):
+def ProfondeurBornee(seuil, depart, but):
+    iteration = 0
+    profondeur = 0
+    nbcree = 0
+    nbDev = 0
     nSeuil = float('inf')
-    vus=[]
-    enAttente=[etat_debut]
-
+    vus = []
+    enAttente = [depart]
+    
     while enAttente:
-        prochain=enAttente.pop(0)
+        prochain = enAttente.pop(0)
         vus.append(prochain)
-        if est_but(prochain,etat_but):
-            print("SOLUTION TROUVE")
-            solution=prochain
-            return True, s, solution
+        if est_but(prochain, but):
+            solution = prochain
+            print("nbDevelopees =", nbDev)
+            print("nbcree = ", nbcree)
+            print("iteration =", iteration)
+            return True, -1
         else:
-            for e in fils_etat(prochain):
-                cout_fils = fEtat(e, etat_but,g) 
-                print(cout_fils)
-                if cout_fils <= s and not any(np.array_equal(e, vu) for vu in vus):
-                    enAttente.insert(0, e)
-                    g+=1
+            iteration += 1
+            for elem in fils_etat(prochain):
+                nbcree += 1
+                if fEtat(elem, but,profondeur) <= seuil and not dans_vus(vus, elem):
+                    nbDev += 1
+                    enAttente.insert(0, elem)
                 else:
-                    nSeuil = min(nSeuil, cout_fils)
-    if nSeuil == float('inf'):
-        return True,seuil,None
-    else:
-        seuil=nSeuil
-        return False,seuil,None
+                    nSeuil = min(nSeuil, fEtat(elem, but,profondeur))
+    
+    print("nouveau seuil =", nSeuil)
+    return False, nSeuil if nSeuil != float('inf') else True, -1
 
 
 
+def IDA_star(init, but):
+    solution = None
+    seuil = fEtat(init, but,0)
+    termine = False, -2
+    
+    while not termine[0]:
+        print("Seuil actuel:", seuil)
+        termine = ProfondeurBornee(seuil, init, but)
+        if termine[1]==seuil:
+            print("Probleme de SEUIL, ARRET")
+            return False
+        seuil = termine[1]  
+        if termine[1] == -1:
+            solution = termine[0]
+            break
+        
+    
+    return solution if solution else False
 
 
 
+#print("Début du test de la recherche en profondeur d'abord bornée...")
+#print(Profondeur_dabord_bornee(etat_debut,etat_but,2))
 
 
 
-etat_debut =[[0, 0, 0, 6],
-     [5, 9, 0, 7],
-     [1, 3, 0, 3]]
+print("\nEtat initial 1 || Etat But 1 :", IDA_star(init1, but1))
+print("\nEtat initial 1 || Etat But 2 :", IDA_star(init1, but2))
 
-
-etat_but =[[6, 0, 0, 0],
-     [5, 9, 0, 0],
-     [1, 3, 7, 3]]
-
-
-
-
-
-
-print("ETAT DEBUT : ")
-afficher(etat_debut)
-print("ETAT FINAL : ")
-afficher(etat_but)
-
-print("Début du test de la recherche en profondeur d'abord bornée...")
-print(Profondeur_dabord_bornee(etat_debut,etat_but,2))
-
-print("Début du test IDA...")
-print(IDA_star())
+print("\nEtat initial 2 || Etat But 3 :", IDA_star(init2, but3))
+print("\nEtat initial 2 || Etat But 4 :", IDA_star(init2, but4))
+print("\nEtat initial 2 || Etat But 5 :", IDA_star(init2, but5))
+print("\nEtat initial 2 || Etat But 6 :", IDA_star(init2, but6))

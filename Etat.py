@@ -74,7 +74,11 @@ def fils_etat(etat):
     return retour
 
 def est_but(etat, etat_but):
+    if len(etat) != len(etat_but):
+        return False       
     return all(etat[i][j] == etat_but[i][j] for i in range(len(etat)) for j in range(len(etat[i])))
+
+
 
 def afficher(etat):
     bold_start = "\033[1m"
@@ -83,5 +87,32 @@ def afficher(etat):
     for ligne in etat:
         print('|' + '|'.join(str(cube) if cube != 0 else ' ' for cube in ligne) + '|')
     print(bold_end)
+
+
+def nombreMalMis(etat, but):
+    mal_mis=0
+    for i in range(3):
+        for j in range(4):
+            if etat[i][j]!=but[i][j]:
+                mal_mis=mal_mis+1
+    return mal_mis
+
+
+def fEtat(etat,but, g):
+    return g + h(etat,but)
+
+
+def h(etat, but):
+    return heuristique_profondeur(etat,but)
+
+
+def heuristique_profondeur(etat, but):
+    mal_mis_profondeur = 0
+    for tige in range(3):
+        for hauteur in range(3, -1, -1): 
+            if etat[tige][hauteur] != 0 and etat[tige][hauteur] != but[tige][hauteur]:
+                mal_mis_profondeur += (4 - hauteur)  
+                break 
+    return mal_mis_profondeur
 
 

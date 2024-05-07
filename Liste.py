@@ -34,3 +34,7 @@ def afficher_liste_etat(liste):
                 print(' '.join(f"{line:<13}" for line in lines))
             
             line_buffer = [] 
+
+
+def dans_vus(liste_de_matrices, matrice_recherchee):
+    return any(np.array_equal(matrice, matrice_recherchee) for matrice in liste_de_matrices)
