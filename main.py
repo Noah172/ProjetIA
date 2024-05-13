@@ -93,11 +93,11 @@ def IDA_star(init, but):
             return False
         seuil = termine[1]  
         if termine[1] == -1:
-            solution = termine[0]
+            solution = termine[2]
             break
         
     
-    return solution if solution else False
+    return solution if solution.size > 0 else False
 
 
 
