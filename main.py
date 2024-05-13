@@ -42,11 +42,11 @@ def Profondeur_dabord_bornee(etat_initial, but,limite):
 
 ################################ETAPE 3##################################
 
-testEtatBut=None
-filsEtat=None
-solution=None
+
+
 
 def ProfondeurBornee(seuil, depart, but):
+    solution=None
     iteration = 0
     profondeur = 0
     nbcree = 0
@@ -60,13 +60,15 @@ def ProfondeurBornee(seuil, depart, but):
         vus.append(prochain)
         if est_but(prochain, but):
             solution = prochain
+            print("TRUE")
             print("nbDevelopees =", nbDev)
             print("nbcree = ", nbcree)
             print("iteration =", iteration)
-            return True, -1
+            return True, -1,solution
         else:
             iteration += 1
             for elem in fils_etat(prochain):
+                
                 nbcree += 1
                 if fEtat(elem, but,profondeur) <= seuil and not dans_vus(vus, elem):
                     nbDev += 1
@@ -75,8 +77,7 @@ def ProfondeurBornee(seuil, depart, but):
                     nSeuil = min(nSeuil, fEtat(elem, but,profondeur))
     
     print("nouveau seuil =", nSeuil)
-    return False, nSeuil if nSeuil != float('inf') else True, -1
-
+    return False, nSeuil,solution if nSeuil != float('inf') else True, -1,solution
 
 
 def IDA_star(init, but):
@@ -100,15 +101,25 @@ def IDA_star(init, but):
 
 
 
+
 #print("Début du test de la recherche en profondeur d'abord bornée...")
 #print(Profondeur_dabord_bornee(etat_debut,etat_but,2))
 
 
 
-print("\nEtat initial 1 || Etat But 1 :", IDA_star(init1, but1))
-print("\nEtat initial 1 || Etat But 2 :", IDA_star(init1, but2))
+def run_tests():
+    print("\nEtat initial 1 || Etat But 1 :")
+    IDA_star(init1, but1)
+    print("\nEtat initial 1 || Etat But 2 :")
+    IDA_star(init1, but2)
+    print("\nEtat initial 2 || Etat But 3 :")
+    IDA_star(init2, but3)
+    print("\nEtat initial 2 || Etat But 4 :")
+    IDA_star(init2, but4)
+    print("\nEtat initial 2 || Etat But 5 :")
+    IDA_star(init2, but5)
+    print("\nEtat initial 2 || Etat But 6 :")
+    IDA_star(init2, but6)
 
-print("\nEtat initial 2 || Etat But 3 :", IDA_star(init2, but3))
-print("\nEtat initial 2 || Etat But 4 :", IDA_star(init2, but4))
-print("\nEtat initial 2 || Etat But 5 :", IDA_star(init2, but5))
-print("\nEtat initial 2 || Etat But 6 :", IDA_star(init2, but6))
+
+run_tests()

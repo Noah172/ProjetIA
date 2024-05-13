@@ -23,7 +23,7 @@ def top_tige(ligne, colonne):
 
 def trouver_destination(etat,ntige):
     retour= []
-    for i in range(len(etat)):
+    for i in range(4):
         tige = [ligne[i] for ligne in etat]
         if (i != ntige) and (not est_pleine(tige)):
             retour.append(i)
@@ -69,6 +69,7 @@ def fils_etat(etat):
         for elem in lst:
             tige_deplacement= [ligne[elem] for ligne in etat]
             nouveau_etat = deplacer(etat, ligne, tige_deplacement)
+            
             if not est_but(etat,nouveau_etat):
                 retour.append(nouveau_etat)
     return retour
