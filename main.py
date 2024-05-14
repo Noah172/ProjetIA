@@ -42,9 +42,6 @@ def Profondeur_dabord_bornee(etat_initial, but, limite):
 
 ################################ETAPE 3##################################
 
-
-
-
 def ProfondeurBornee(seuil, depart, but):
     solution=None
     iteration = 0
@@ -60,7 +57,7 @@ def ProfondeurBornee(seuil, depart, but):
         vus.append(prochain)
         if est_but(prochain, but):
             solution = prochain
-            print("TRUE")
+            print("SOLUTION TROUVEE")
             print("nbDevelopees =", nbDev)
             print("nbcree = ", nbcree)
             print("iteration =", iteration)
@@ -76,7 +73,6 @@ def ProfondeurBornee(seuil, depart, but):
                 else:
                     nSeuil = min(nSeuil, fEtat(elem, but,profondeur))
     
-    print("nouveau seuil =", nSeuil)
     return False, nSeuil,solution if nSeuil != float('inf') else True, -1,solution
 
 
@@ -86,7 +82,6 @@ def IDA_star(init, but):
     termine = False, -2
     
     while not termine[0]:
-        print("Seuil actuel:", seuil)
         termine = ProfondeurBornee(seuil, init, but)
         if termine[1]==seuil:
             print("Probleme de SEUIL, ARRET")
@@ -99,8 +94,6 @@ def IDA_star(init, but):
     
     return solution if solution.size > 0 else False
 
-
-    
 
 def run_tests_profondeur():
     print("Début du test de la recherche en profondeur d'abord bornée...")
@@ -115,8 +108,6 @@ def run_tests_profondeur():
     print(resultat[0])
     afficher(resultat[1])
 
-    
-
 def run_tests():
     print("\nEtat initial 1 || Etat But 1 :")
     IDA_star(init1, but1)
@@ -124,12 +115,72 @@ def run_tests():
     IDA_star(init1, but2)
     print("\nEtat initial 2 || Etat But 3 :")
     IDA_star(init2, but3)
+    '''
     print("\nEtat initial 2 || Etat But 4 :")
     IDA_star(init2, but4)
     print("\nEtat initial 2 || Etat But 5 :")
     IDA_star(init2, but5)
     print("\nEtat initial 2 || Etat But 6 :")
-    IDA_star(init2, but6)
+    IDA_star(init2, but6)'''
     
 run_tests_profondeur()
 run_tests()
+
+
+
+'''
+SORTIE CONSOLE 
+
+Etat Debut || Etat But :
+True
+
+| |9| | |
+| |5| |7|
+|1|3|6|3|
+
+
+Etat initial 1 || Etat But 1 :
+True
+
+|1| |7|4|
+|2| |8|5|
+|3| |9|6|
+
+
+Etat initial 1 || Etat But 1 :
+SOLUTION TROUVEE
+nbDevelopees = 1
+nbcree =  6
+iteration = 1
+
+Etat initial 1 || Etat But 2 :
+SOLUTION TROUVEE
+nbDevelopees = 1402
+nbcree =  3078
+iteration = 492
+
+Etat initial 2 || Etat But 3 :
+SOLUTION TROUVEE
+nbDevelopees = 2071
+nbcree =  3099
+iteration = 512
+
+Etat initial 2 || Etat But 4 :
+SOLUTION TROUVEE
+nbDevelopees = 5824
+nbcree = 9183
+iteration = 1307
+
+Etat initial 2 || Etat But 5 :
+SOLUTION TROUVEE
+nbDevelopees = 7419
+nbcree = 11562
+iteration = 1672
+
+Etat initial 2 || Etat But 6 :
+SOLUTION TROUVEE
+nbDevelopees = 9321
+nbcree = 14589
+iteration = 1995
+
+'''
