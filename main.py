@@ -22,22 +22,22 @@ def Profondeur_dabord(etat_initial, but):
         return (False,etat_initial)
 
 
-def Profondeur_dabord_bornee(etat_initial, but,limite):
+def Profondeur_dabord_bornee(etat_initial, but, limite):
     enAttente = [(etat_initial, 0)]
-    vus=[]
-    trouve=False
+    vus = []
+    trouve = False
     while enAttente:
-        actuel,profondeur=enAttente.pop(0)
+        actuel, profondeur = enAttente.pop(0)
         vus.append(actuel)
-        if est_but(actuel,but):
-            trouve=True
-            return (True,actuel)
-        if profondeur< limite:
+        if est_but(actuel, but):
+            trouve = True
+            return (True, actuel)
+        if profondeur < limite:
             for etat_fils in fils_etat(actuel):
                 if not any(np.array_equal(etat_fils, vu) for vu in vus):
                     ajouterTete((etat_fils, profondeur + 1), enAttente)
     if not trouve:
-        return (False,etat_initial)
+        return (False, etat_initial)
 
 
 ################################ETAPE 3##################################
@@ -100,12 +100,22 @@ def IDA_star(init, but):
     return solution if solution.size > 0 else False
 
 
+    
 
+def run_tests_profondeur():
+    print("Début du test de la recherche en profondeur d'abord bornée...")
 
-#print("Début du test de la recherche en profondeur d'abord bornée...")
-#print(Profondeur_dabord_bornee(etat_debut,etat_but,2))
+    print("\nEtat Debut || Etat But :")
+    resultat = Profondeur_dabord_bornee(etat_debut, etat_but, 4)
+    print(resultat[0])
+    afficher(resultat[1])
 
+    print("\nEtat initial 1 || Etat But 1 :")
+    resultat = Profondeur_dabord_bornee(init1, but1, 4)
+    print(resultat[0])
+    afficher(resultat[1])
 
+    
 
 def run_tests():
     print("\nEtat initial 1 || Etat But 1 :")
@@ -120,6 +130,6 @@ def run_tests():
     IDA_star(init2, but5)
     print("\nEtat initial 2 || Etat But 6 :")
     IDA_star(init2, but6)
-
-
+    
+run_tests_profondeur()
 run_tests()
